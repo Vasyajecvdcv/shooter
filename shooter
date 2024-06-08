@@ -2,6 +2,12 @@
 import pygame  
 import random 
 import time 
+import sys
+import os
+def resource_path(relative):
+    if hasattr(sys,"_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(relative)
 win_width=700  
 win_height=500  
  
@@ -16,15 +22,15 @@ score = 0
 start=time.time()
   
 pygame.mixer.init() 
-shoot=pygame.mixer.Sound("fire.ogg") 
-pygame.mixer.music.load("space.ogg")  
+shoot=pygame.mixer.Sound(resource_path("fire.ogg"))
+pygame.mixer.music.load(resource_path("space.ogg"))
 pygame.mixer.music.play(-1)  
 pygame.mixer.music.set_volume(0.4)  
 pygame.font.init() 
   
 class Settings:  
     def __init__(self,image,x,y,w,h):  
-        self.image=pygame.image.load(image)  
+        self.image=pygame.image.load(resource_path(image))  
         self.image=pygame.transform.scale(self.image,(w,h))  
         self.rect=self.image.get_rect()  
         self.rect.x=x
@@ -39,7 +45,7 @@ class Player(Settings):
         self.speed=s  
         self.hp=hp 
         self.shoot=True  
-        self.image_heart=pygame.image.load("hp.png")  
+        self.image_heart=pygame.image.load(resource_path("hp.png")) 
         self.image_heart=pygame.transform.scale(self.image_heart,(50,50))  
       
     def move(self): 
